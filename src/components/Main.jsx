@@ -151,7 +151,6 @@ export default function Main() {
               {tagsList.map((tag,index) => 
                 <div className="form-check" key={index} >
                   <input
-                    class
                     type="checkbox"
                     id={tag}
                     name={tag}

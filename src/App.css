@@ -11,7 +11,7 @@ img{
 
 body {
   font-family: Arial, sans-serif;
-  background-color: #101712;
+  background-color: #101712 !important;
   color: white;  
 }
 
@@ -77,17 +77,6 @@ form{
       border-radius: 9999px;
       border: 1px solid transparent;
       font-size: 1rem;
-    }
-  }
-}
-
-.list{
-  margin: 3rem 0;
-  ol{
-    li{
-      font-size: 18px;
-      padding-left: 2rem;
-      margin-bottom: 2rem;
     }
   }
 }

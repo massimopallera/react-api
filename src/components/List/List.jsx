@@ -1,22 +1,19 @@
 export default function List({arr, url}) {
   return (
-    <div className="list">
-      <ol>
+    <div className="row row-cols-1 d-flex align-items-stretch g-5">
         {arr.map((element, index) =>
-          <li key={index}>
-            <div className="list-item">
-              <h3>{element.title}</h3>
-              <p>{element.content}</p>
-              <img src={url+element.image} alt="" />
-
-              {/* <span>{element.tags}</span>
-              <h4>{element.category}</h4> */}
+          <div key={index} className="col align-self-stretch">
+            <div className="card h-100 bg-dark text-white" >
+              <div className="card-header text-center ">
+                <h3>{element.title}</h3>
+              </div>
+              <div className="card-body">
+                <p>{element.content}</p>
+                <img src={url+element.image} alt="" />
+              </div>
             </div>
-
-
-          </li>
+          </div>
         )}
-      </ol>
     </div>
   )
 }
