@@ -67,30 +67,35 @@ export default function Main() {
     
   }
 
-  function handleDelete(){}
+  function handleDelete(slug) {
+    const url = "http://localhost:3000/posts"
+    const finalUrl = `${url}/${slug}`
+
+    fetch(finalUrl, {
+      method: 'DELETE',
+    })
+      .then(resp => resp.json())
+    .then(data => setPosts(data.data))
+
+  }
 
   // to handle form submit
   function handleSubmit(e) { 
-    e.preventDefault()
-    setPosts([
-      ...posts,
-      {
-        id: posts.length + 1,
-        title: formData.title,
-        content: formData.content,
-        image: formData.image,
-        // category: formData.category,
-        tags: formData.tags,
-        // published: formData.published,
-      }])
+    e.preventDefault()      
     
     const url = "http://localhost:3000/posts"
+    const slug = formData.title.trim().toLowerCase()
     
     fetch(url, {
       method: 'POST',
-      body: JSON.stringify(formData),
+      body: JSON.stringify({
+        ...formData,
+        slug
+      }),
       headers: { 'Content-Type': 'application/json' }
     })
+      .then(resp => resp.json())
+    .then(data => setPosts(data.posts))
     
     setFormData(initialFormData)
   }
