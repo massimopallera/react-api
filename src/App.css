@@ -51,8 +51,8 @@ form{
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  height: 70vh;
-  width: 70vw;
+  max-height: 70vh;
+  max-width: 70vw;
   background: #333;
 
   h2{

@@ -110,11 +110,11 @@ export default function Main() {
     <main>
       <div className="container">
 
-        <button popovertarget="offCanvas" onClick={handleOverlay} >POPOVER</button>
+        <button className='btn btn-light' popovertarget="offCanvas" onClick={handleOverlay} >Aggiungi Post</button>
 
         <div className="overlay">
           {/* FORM */}
-          <Form onSubmit={handleSubmit} id={"offCanvas"}>
+          <Form onSubmit={handleSubmit} id={"offCanvas"} handleOverlay={handleOverlay}>
 
             {/* TITLE INPUT */}
             <Input
@@ -149,8 +149,9 @@ export default function Main() {
             {/* TAGS CHECKBOXS */}
             <div className="tags">
               {tagsList.map((tag,index) => 
-                <div className="tag-item" key={index} >
+                <div className="form-check" key={index} >
                   <input
+                    class
                     type="checkbox"
                     id={tag}
                     name={tag}
@@ -168,7 +169,6 @@ export default function Main() {
               <label htmlFor="public">Pubblica</label>
             </div>
 
-            <button popovertarget="offCanvas" onClick={handleOverlay} popoveraction="hide">Chiudi</button>
 
           </Form>
 
