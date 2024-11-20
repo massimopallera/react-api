@@ -1,4 +1,4 @@
-export default function List({arr}) {
+export default function List({arr, url}) {
   return (
     <div className="list">
       <ol>
@@ -7,8 +7,10 @@ export default function List({arr}) {
             <div className="list-item">
               <h3>{element.title}</h3>
               <p>{element.content}</p>
-              <span>{element.tags}</span>
-              <h4>{element.category}</h4>
+              <img src={url+element.image} alt="" />
+
+              {/* <span>{element.tags}</span>
+              <h4>{element.category}</h4> */}
             </div>
 
 

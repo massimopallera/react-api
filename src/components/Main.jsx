@@ -1,8 +1,8 @@
 import { useState,useEffect } from 'react'
 
-import blogPosts from '../assets/db/posts.js'
-import tags from '../assets/db/tags.js'
-import categories from '../assets/db/categories.js'
+// import blogPosts from '../assets/db/posts.js'
+// import tags from '../assets/db/tags.js'
+// import categories from '../assets/db/categories.js'
 
 import List from './List/List'
 import Form from './Form/Form'
@@ -18,18 +18,20 @@ const initialFormData = {
 
 export default function Main() {
 
-  const url = "http://localhost:3000/posts"
+  const url = "http://localhost:3000/"
 
   const [posts, setPosts] = useState([])
-  // const [filteredPosts, setFilteredPosts] = useState(posts.filter(post => post.published))
+  const [tagsList, setTagsList] = useState([])
+  const [categoriesList, setCategoriesList] = useState([])
+  // const [filteredPosts, setFilteredPosts] = useState(posts.filter(post => post.published)) 
   const [formData, setFormData] = useState(initialFormData);
 
+  // AJAX call
   function fetchData(url = "http://localhost:3000/posts") {
     fetch(url)
      .then(response => response.json())
      .then(data => setPosts(data.data))
   }
-
 
   //to handle all Form Data
   function handleFormData(e) {
@@ -86,6 +88,18 @@ export default function Main() {
     // console.log(posts);
   }
 
+  useEffect((url = "http://localhost:3000/tags") => {
+    fetch(url)
+      .then(resp => resp.json())
+      .then(data => setTagsList(data.tags))
+    },[])
+    
+  useEffect((url = "http://localhost:3000/categories") => {
+    fetch(url)
+      .then(resp => resp.json())
+      .then(data => setCategoriesList(data.categories))
+    },[])
+    
   useEffect(fetchData,[])
 
   return (
@@ -119,7 +133,7 @@ export default function Main() {
 
           {/* CATEGORY SELECT */}
           <select name="category" id="category" value={formData.category} onChange={handleFormData}>
-            {categories.map((cat, index) =>
+            {categoriesList.map((cat, index) =>
               <option key={index} value={cat}>{cat}</option>
             )}
           </select>
@@ -127,7 +141,7 @@ export default function Main() {
 
           {/* TAGS CHECKBOXS */}
           <div className="tags">
-            {tags.map((tag,index) => 
+            {tagsList.map((tag,index) => 
               <div className="tag-item" key={index} >
                 <input
                   type="checkbox"
@@ -150,7 +164,7 @@ export default function Main() {
         </Form>
 
         {/* LIST */}
-        <List arr={posts}/>
+        <List arr={posts} url={url}/>
       </div>
     </main>
   )
