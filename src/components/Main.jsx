@@ -11,6 +11,7 @@ import Input from './Input/Input';
 const initialFormData = {
   title: '',
   content: '',
+  image: '',
   category: '',
   tags: [],
   published: false
@@ -66,6 +67,8 @@ export default function Main() {
     
   }
 
+  function handleDelete(){}
+
   // to handle form submit
   function handleSubmit(e) { 
     e.preventDefault()
@@ -75,17 +78,21 @@ export default function Main() {
         id: posts.length + 1,
         title: formData.title,
         content: formData.content,
-        category: formData.category,
+        image: formData.image,
+        // category: formData.category,
         tags: formData.tags,
-        published: formData.published,
+        // published: formData.published,
       }])
     
-    // setFilteredPosts(
-    //   posts.filter(post => post.published)
-    // )
+    const url = "http://localhost:3000/posts"
+    
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(formData),
+      headers: { 'Content-Type': 'application/json' }
+    })
     
     setFormData(initialFormData)
-    // console.log(posts);
   }
 
   function handleOverlay() { 
@@ -138,6 +145,17 @@ export default function Main() {
               name="content"
             />
 
+            {/* IMAGE PATH INPUT */}
+            <Input
+              type={'text'}
+              title={"Immagine"}
+              placeholder={"Inserisci Percorso dell'immagine"}
+              id='newFormData-content'
+              value={formData.image}
+              onChange={handleFormData}
+              name="image"
+            />
+
             {/* CATEGORY SELECT */}
             <select name="category" id="category" value={formData.category} onChange={handleFormData}>
               {categoriesList.map((cat, index) =>
@@ -174,7 +192,7 @@ export default function Main() {
         </div>
 
         {/* LIST */}
-        <List arr={posts} url={url}/>
+        <List arr={posts} url={url} handleDelete={handleDelete}/>
       </div>
     </main>
   )

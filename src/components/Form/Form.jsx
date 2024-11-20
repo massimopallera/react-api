@@ -15,7 +15,9 @@ export default function Form({
       <div className='d-flex justify-content-center gap-5 my-4'>
         <button className="btn btn-primary" type="submit">Aggiungi nuovo articolo</button>
 
-        <button className='btn btn-light'
+        <button
+          type="button"
+          className='btn btn-light'
           popovertarget="offCanvas"
           onClick={handleOverlay} 
           popoveraction="hide"
