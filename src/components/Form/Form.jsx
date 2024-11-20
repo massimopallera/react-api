@@ -1,10 +1,11 @@
 
 export default function Form({
   onSubmit, 
+  id,
   children
 }) {
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} id={id} >
 
       {children}
 

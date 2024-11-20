@@ -80,16 +80,20 @@ export default function Main() {
         published: formData.published,
       }])
     
-    setFilteredPosts(
-      posts.filter(post => post.published)
-    )
+    // setFilteredPosts(
+    //   posts.filter(post => post.published)
+    // )
     
     setFormData(initialFormData)
     // console.log(posts);
   }
 
+  function handleOverlay() { 
+    document.querySelector('.overlay').classList.toggle('active')
+  }
+
   useEffect((url = "http://localhost:3000/tags") => {
-    fetch(url)
+    fetch(url,{method: 'GET'})
       .then(resp => resp.json())
       .then(data => setTagsList(data.tags))
     },[])
@@ -106,62 +110,69 @@ export default function Main() {
     <main>
       <div className="container">
 
-        {/* FORM */}
-        <Form onSubmit={handleSubmit}>
+        <button popovertarget="offCanvas" onClick={handleOverlay} >POPOVER</button>
 
-          {/* TITLE INPUT */}
-          <Input
-            type={'text'}
-            title={"Titolo"}
-            placeholder={"Inserisci il titolo"}
-            id='newFormData-title'
-            name="title"
-            value={formData.title}
-            onChange={handleFormData}
-          />
+        <div className="overlay">
+          {/* FORM */}
+          <Form onSubmit={handleSubmit} id={"offCanvas"}>
 
-          {/* CONTENT INPUT */}
-          <Input
-            type={'text'}
-            title={"Contenuto"}
-            placeholder={"Inserisci il contenuto"}
-            id='newFormData-content'
-            value={formData.content}
-            onChange={handleFormData}
-            name="content"
-          />
+            {/* TITLE INPUT */}
+            <Input
+              type={'text'}
+              title={"Titolo"}
+              placeholder={"Inserisci il titolo"}
+              id='newFormData-title'
+              name="title"
+              value={formData.title}
+              onChange={handleFormData}
+            />
 
-          {/* CATEGORY SELECT */}
-          <select name="category" id="category" value={formData.category} onChange={handleFormData}>
-            {categoriesList.map((cat, index) =>
-              <option key={index} value={cat}>{cat}</option>
-            )}
-          </select>
+            {/* CONTENT INPUT */}
+            <Input
+              type={'text'}
+              title={"Contenuto"}
+              placeholder={"Inserisci il contenuto"}
+              id='newFormData-content'
+              value={formData.content}
+              onChange={handleFormData}
+              name="content"
+            />
+
+            {/* CATEGORY SELECT */}
+            <select name="category" id="category" value={formData.category} onChange={handleFormData}>
+              {categoriesList.map((cat, index) =>
+                <option key={index} value={cat}>{cat}</option>
+              )}
+            </select>
 
 
-          {/* TAGS CHECKBOXS */}
-          <div className="tags">
-            {tagsList.map((tag,index) => 
-              <div className="tag-item" key={index} >
-                <input
-                  type="checkbox"
-                  id={tag}
-                  name={tag}
-                  value={tag}
-                  onChange={handleFormTags}
-                />
+            {/* TAGS CHECKBOXS */}
+            <div className="tags">
+              {tagsList.map((tag,index) => 
+                <div className="tag-item" key={index} >
+                  <input
+                    type="checkbox"
+                    id={tag}
+                    name={tag}
+                    value={tag}
+                    onChange={handleFormTags}
+                  />
 
-                <label htmlFor={tag}>{tag}</label>
-              </div>
-            )}
-          </div>
+                  <label htmlFor={tag}>{tag}</label>
+                </div>
+              )}
+            </div>
 
-          <div className="state">
-            <input type="checkbox" name="published" id="" onChange={handleFormData}/>
-            <label htmlFor="public">Pubblica</label>
-          </div>
+            <div className="state">
+              <input type="checkbox" name="published" id="" onChange={handleFormData}/>
+              <label htmlFor="public">Pubblica</label>
+            </div>
 
-        </Form>
+            <button popovertarget="offCanvas" onClick={handleOverlay} popoveraction="hide">Chiudi</button>
+
+          </Form>
+
+        </div>
 
         {/* LIST */}
         <List arr={posts} url={url}/>
