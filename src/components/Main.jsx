@@ -3,13 +3,13 @@ import { useState,useEffect } from 'react'
 import List from './List/List'
 import FormComponent from './Form/Form'
 
+const protocol = 'http:' 
+const domain = `localhost:3000` //insert domain
+const resourcePath = `${protocol}//${domain}/` //insert resource path
+const uri = `${protocol}//${domain}/posts`
 
 export default function Main() {
 
-  const protocol = 'http:'
-  const domain = `localhost:3000`
-  const resourcePath = `${protocol}//${domain}/`
-  const uri = `${protocol}//${domain}/posts`
 
   const [posts, setPosts] = useState([])
 
@@ -25,7 +25,7 @@ export default function Main() {
     document.querySelector('.overlay').classList.toggle('active')
   }
 
-  useEffect(fetchData,[])
+  useEffect(() => fetchData(uri),[])
 
   return (
     <main>
@@ -35,7 +35,7 @@ export default function Main() {
 
         <div className="overlay">
           {/* FORM */}
-          <FormComponent handleOverlay={handleOverlay} returnNewPosts={(newPosts) => setPosts(newPosts)} ></FormComponent>
+          <FormComponent uri={resourcePath} handleOverlay={handleOverlay} returnNewPosts={(newPosts) => setPosts(newPosts)} ></FormComponent>
         </div>
 
         {/* LIST */}

@@ -1,34 +1,35 @@
 import { useState, useEffect } from "react";
 
-
-export default function Form({
-  // INPUT
-  handleOverlay,
-
-  // OUTPUT
-  returnNewPosts,
-
-}) {
-
-  const initialFormData = {
+const initialFormData = {
     title: '',
     content: '',
     image: '',
     category: '',
     tags: [],
     published: false
-  }  
+}  
+  
+export default function Form({
+  // INPUT
+  handleOverlay,
+  uri,
 
+  // OUTPUT
+  returnNewPosts}) {
+
+  
   const [tagsList, setTagsList] = useState([])
   const [categoriesList, setCategoriesList] = useState([])
   const [formData, setFormData] = useState(initialFormData);
 
 
   // to handle form submit
-  function handleSubmit(e) { 
+  function handleSubmit(e, uri) { 
     e.preventDefault()      
     
-    const url = "http://localhost:3000/posts"
+    const url = `${uri}posts`
+
+    // const url = "http://localhost:3000/posts"
     const slug = formData.title.trim().toLowerCase()
     
     fetch(url, {
@@ -57,7 +58,7 @@ export default function Form({
         }
       )    
   }
-  
+
   //to handle just tags checkboxes
   function handleFormTags(e) {
     const isChecked = e.target.checked
@@ -79,26 +80,30 @@ export default function Form({
     
   }
 
-  //get tags
-  useEffect((url = "http://localhost:3000/tags") => {
-    fetch(url,{method: 'GET'})
-      .then(resp => resp.json())
-      .then(data => setTagsList(data.tags))
-    },[])
-  
-  //get categories
-  useEffect((url = "http://localhost:3000/categories") => {
+
+  //ajax call function for tags and categories
+  function fetchSet(uri, set, slug) {
+    const url = `${uri}${slug}`
+    console.log(url);
+    
+
     fetch(url)
       .then(resp => resp.json())
-      .then(data => setCategoriesList(data.categories))
-    },[])
+      .then(data => set(data[slug]))
+  }
+
+  //get tags
+  useEffect(() => fetchSet(uri, setTagsList, 'tags'),[])
+  
+  //get categories
+  useEffect(() => fetchSet(uri, setCategoriesList, 'categories'), [])
     
 
 
   return (
     <form
       className="form-control bg-dark text-white py-3 px-5"
-      onSubmit={handleSubmit} id="offCanvas" >
+      onSubmit={(e) => handleSubmit(e, uri)} id="offCanvas" >
 
       {/* TITLE INPUT */}
       <label htmlFor="title">Inserisci titolo del post</label>
