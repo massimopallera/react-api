@@ -6,7 +6,10 @@ import FormComponent from './Form/Form'
 
 export default function Main() {
 
-  const url = "http://localhost:3000/"
+  const protocol = 'http:'
+  const domain = `localhost:3000`
+  const resourcePath = `${protocol}//${domain}/`
+  const uri = `${protocol}//${domain}/posts`
 
   const [posts, setPosts] = useState([])
 
@@ -39,7 +42,7 @@ export default function Main() {
         {/* <List arr={posts} url={url} handleDelete={handleDelete} /> */}
         <div className="row row-cols-1 d-flex align-items-stretch g-5 my-3">
 
-          {posts.map((post, index) => <List post={post} index={index} key={index} url={url} returnNewPosts={(newPosts) => setPosts(newPosts)}></List>)}
+          {posts.map((post, index) => <List post={post} index={index} key={index} uri={uri} imgSrc={resourcePath} returnNewPosts={(newPosts) => setPosts(newPosts)}></List>)}
     </div>
           
       </div>

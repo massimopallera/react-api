@@ -1,10 +1,10 @@
-export default function List({post, index, url, handleDelete, returnNewPosts}) {
+export default function List({post, index, uri, handleDelete, returnNewPosts, imgSrc}) {
   
   function handleDelete(slug) {
-    const url = "http://localhost:3000/posts"
-    const finalUrl = `${url}/${slug}`
-
-    fetch(finalUrl, {
+    
+    const url = `${uri}/${slug}`
+    
+    fetch(url, {
       method: 'DELETE',
     })
       .then(resp => resp.json())
@@ -25,7 +25,7 @@ export default function List({post, index, url, handleDelete, returnNewPosts}) {
           <p>{post.content}</p>
 
           <div className="w-100 d-flex felx-wrap justify-content-between align-items-center">
-            <img src={url + post.image} alt="" />
+            <img src={imgSrc + post.image} alt="" />
             <button type="button" className="btn btn-danger align-self-end" onClick={() => handleDelete(post.slug)}>Delete</button>
           </div>
         </div>
