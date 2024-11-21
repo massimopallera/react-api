@@ -4,7 +4,9 @@ import { useState, useEffect } from "react";
 export default function Form({
   // INPUT
   handleOverlay,
-  after
+
+  // OUTPUT
+  returnNewPosts,
 
 }) {
 
@@ -38,7 +40,7 @@ export default function Form({
       headers: { 'Content-Type': 'application/json' }
     })
       .then(resp => resp.json())
-    .then(data => after(data.posts))
+      .then(data => returnNewPosts(data.posts))
     
     setFormData(initialFormData)
 
@@ -77,12 +79,14 @@ export default function Form({
     
   }
 
+  //get tags
   useEffect((url = "http://localhost:3000/tags") => {
     fetch(url,{method: 'GET'})
       .then(resp => resp.json())
       .then(data => setTagsList(data.tags))
     },[])
-    
+  
+  //get categories
   useEffect((url = "http://localhost:3000/categories") => {
     fetch(url)
       .then(resp => resp.json())
@@ -98,8 +102,7 @@ export default function Form({
 
       {/* TITLE INPUT */}
       <label htmlFor="title">Inserisci titolo del post</label>
-      <input
-        type='text'
+      <input type='text'
         title="Titolo"
         placeholder="Inserisci il titolo"
         id='newFormData-title'
@@ -110,8 +113,7 @@ export default function Form({
 
       {/* CONTENT INPUT */}
       <label htmlFor="content">Inserisci descrizione del post</label>
-      <input 
-        type='text'
+      <input type='text'
         title="Contenuto"
         placeholder="Inserisci descrizione"
         id='newFormData-content'
@@ -122,8 +124,7 @@ export default function Form({
 
       {/* IMAGE PATH INPUT */}
       <label htmlFor="image">Inserisci percorso immagine</label>
-      <input
-        type='text'
+      <input type='text'
         title="Immagine"
         placeholder="Inserisci Percorso dell'immagine"
         id='newFormData-content'
@@ -161,10 +162,6 @@ export default function Form({
         <input type="checkbox" name="published" id="" onChange={handleFormData}/>
         <label htmlFor="public">Pubblica</label>
       </div>
-
-
-
-
 
       <div className='d-flex justify-content-center gap-5 my-4'>
         <button className="btn btn-primary" type="submit">Aggiungi nuovo articolo</button>
