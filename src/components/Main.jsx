@@ -6,7 +6,7 @@ import { useState,useEffect } from 'react'
 
 import List from './List/List'
 import Form from './Form/Form'
-import Input from './Input/Input';
+// import Input from './Input/Input';
 
 const initialFormData = {
   title: '',
@@ -98,6 +98,7 @@ export default function Main() {
     .then(data => setPosts(data.posts))
     
     setFormData(initialFormData)
+
   }
 
   function handleOverlay() { 
@@ -129,10 +130,11 @@ export default function Main() {
           <Form onSubmit={handleSubmit} id={"offCanvas"} handleOverlay={handleOverlay}>
 
             {/* TITLE INPUT */}
-            <Input
-              type={'text'}
-              title={"Titolo"}
-              placeholder={"Inserisci il titolo"}
+            <label htmlFor="title">Inserisci titolo del post</label>
+            <input
+              type='text'
+              title="Titolo"
+              placeholder="Inserisci il titolo"
               id='newFormData-title'
               name="title"
               value={formData.title}
@@ -140,10 +142,11 @@ export default function Main() {
             />
 
             {/* CONTENT INPUT */}
-            <Input
-              type={'text'}
-              title={"Contenuto"}
-              placeholder={"Inserisci il contenuto"}
+            <label htmlFor="content">Inserisci descrizione del post</label>
+            <input 
+              type='text'
+              title="Contenuto"
+              placeholder="Inserisci descrizione"
               id='newFormData-content'
               value={formData.content}
               onChange={handleFormData}
@@ -151,10 +154,11 @@ export default function Main() {
             />
 
             {/* IMAGE PATH INPUT */}
-            <Input
-              type={'text'}
-              title={"Immagine"}
-              placeholder={"Inserisci Percorso dell'immagine"}
+            <label htmlFor="image">Inserisci percorso immagine</label>
+            <input
+              type='text'
+              title="Immagine"
+              placeholder="Inserisci Percorso dell'immagine"
               id='newFormData-content'
               value={formData.image}
               onChange={handleFormData}
