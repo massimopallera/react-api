@@ -8,14 +8,6 @@ import List from './List/List'
 import Form from './Form/Form'
 // import Input from './Input/Input';
 
-const initialFormData = {
-  title: '',
-  content: '',
-  image: '',
-  category: '',
-  tags: [],
-  published: false
-}
 
 export default function Main() {
 
@@ -25,7 +17,7 @@ export default function Main() {
   const [tagsList, setTagsList] = useState([])
   const [categoriesList, setCategoriesList] = useState([])
   // const [filteredPosts, setFilteredPosts] = useState(posts.filter(post => post.published)) 
-  const [formData, setFormData] = useState(initialFormData);
+  const [formData, setFormData] = useState();
 
   // AJAX call
   function fetchData(url = "http://localhost:3000/posts") {
@@ -34,7 +26,7 @@ export default function Main() {
      .then(data => setPosts(data.data))
   }
 
-  //to handle all Form Data
+/*   //to handle all Form Data
   function handleFormData(e) {
     const value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
     // console.log(value)
@@ -66,7 +58,7 @@ export default function Main() {
     // console.log(formTags);
     
   }
-
+ */
   function handleDelete(slug) {
     const url = "http://localhost:3000/posts"
     const finalUrl = `${url}/${slug}`
@@ -79,33 +71,13 @@ export default function Main() {
 
   }
 
-  // to handle form submit
-  function handleSubmit(e) { 
-    e.preventDefault()      
-    
-    const url = "http://localhost:3000/posts"
-    const slug = formData.title.trim().toLowerCase()
-    
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify({
-        ...formData,
-        slug
-      }),
-      headers: { 'Content-Type': 'application/json' }
-    })
-      .then(resp => resp.json())
-    .then(data => setPosts(data.posts))
-    
-    setFormData(initialFormData)
 
-  }
 
   function handleOverlay() { 
     document.querySelector('.overlay').classList.toggle('active')
   }
 
-  useEffect((url = "http://localhost:3000/tags") => {
+/*   useEffect((url = "http://localhost:3000/tags") => {
     fetch(url,{method: 'GET'})
       .then(resp => resp.json())
       .then(data => setTagsList(data.tags))
@@ -116,7 +88,7 @@ export default function Main() {
       .then(resp => resp.json())
       .then(data => setCategoriesList(data.categories))
     },[])
-    
+     */
   useEffect(fetchData,[])
 
   return (
@@ -127,76 +99,7 @@ export default function Main() {
 
         <div className="overlay">
           {/* FORM */}
-          <Form onSubmit={handleSubmit} id={"offCanvas"} handleOverlay={handleOverlay}>
-
-            {/* TITLE INPUT */}
-            <label htmlFor="title">Inserisci titolo del post</label>
-            <input
-              type='text'
-              title="Titolo"
-              placeholder="Inserisci il titolo"
-              id='newFormData-title'
-              name="title"
-              value={formData.title}
-              onChange={handleFormData}
-            />
-
-            {/* CONTENT INPUT */}
-            <label htmlFor="content">Inserisci descrizione del post</label>
-            <input 
-              type='text'
-              title="Contenuto"
-              placeholder="Inserisci descrizione"
-              id='newFormData-content'
-              value={formData.content}
-              onChange={handleFormData}
-              name="content"
-            />
-
-            {/* IMAGE PATH INPUT */}
-            <label htmlFor="image">Inserisci percorso immagine</label>
-            <input
-              type='text'
-              title="Immagine"
-              placeholder="Inserisci Percorso dell'immagine"
-              id='newFormData-content'
-              value={formData.image}
-              onChange={handleFormData}
-              name="image"
-            />
-
-            {/* CATEGORY SELECT */}
-            <select name="category" id="category" value={formData.category} onChange={handleFormData}>
-              {categoriesList.map((cat, index) =>
-                <option key={index} value={cat}>{cat}</option>
-              )}
-            </select>
-
-
-            {/* TAGS CHECKBOXS */}
-            <div className="tags">
-              {tagsList.map((tag,index) => 
-                <div className="form-check" key={index} >
-                  <input
-                    type="checkbox"
-                    id={tag}
-                    name={tag}
-                    value={tag}
-                    onChange={handleFormTags}
-                  />
-
-                  <label htmlFor={tag}>{tag}</label>
-                </div>
-              )}
-            </div>
-
-            <div className="state">
-              <input type="checkbox" name="published" id="" onChange={handleFormData}/>
-              <label htmlFor="public">Pubblica</label>
-            </div>
-
-
-          </Form>
+          <Form handleOverlay={handleOverlay} after={(newPosts) => setPosts(newPosts)} ></Form>
 
         </div>
 
