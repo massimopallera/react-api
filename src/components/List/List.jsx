@@ -24,7 +24,7 @@ export default function List({post, index, uri, handleDelete, returnNewPosts, im
         <div className="card-body d-flex flex-wrap">
           <p>{post.content}</p>
 
-          <div className="w-100 d-flex felx-wrap justify-content-between align-items-center">
+          <div className="align_content_card">
             <img src={imgSrc + post.image} alt="" />
             <button type="button" className="btn btn-danger align-self-end" onClick={() => handleDelete(post.slug)}>Delete</button>
           </div>
