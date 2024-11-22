@@ -31,7 +31,9 @@ export default function Main() {
     <main>
       <div className="container">
 
-        <button className='btn btn-light' popovertarget="offCanvas" onClick={handleOverlay} >Aggiungi Post</button>
+        <div className='buttonContainer'>
+          <button className='btn btn-light classeMia' popovertarget="offCanvas" onClick={handleOverlay} >Aggiungi Post</button>
+        </div>
 
         <div className="overlay">
           {/* FORM */}
